@@ -1,0 +1,15 @@
+* { box-sizing: border-box; }
+header, nav, main, footer { display: block; }
+
+.content-area
+{
+	display: block;
+}
+
+@media only all and (max-width: 768px)
+{
+	footer
+	{
+		padding: 0;
+	}
+}
