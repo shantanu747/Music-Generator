@@ -19,7 +19,7 @@ body {
 .column {
   float: left;
   width: 33.33%;
-  padding: 10px;
+  padding: 0px;
   height: 300px; /* Should be removed. Only for demonstration */
 }
 
