@@ -15,12 +15,28 @@ body {
   color: #E0C600
 }
 
-/* Create three equal columns that floats next to each other */
+/* Create two unequal columns that floats next to each other */
 .column {
   float: left;
-  width: 33.33%;
   padding: 0px;
+  width: 33.33%;
   height: 300px; /* Should be removed. Only for demonstration */
+  color: white;
+}
+
+.left {
+  width: 75%;
+}
+
+.right {
+  width: 25%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .button {
@@ -34,13 +50,6 @@ body {
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
 }
 
 /* Style the footer */

@@ -20,11 +20,24 @@
 		</div>
 
 		<div class="row">
-		  <div class="column" style="background-color:#078EA3;">Column</div>
-		  <div class="column" style="background-color:#07a2ba;">Column</div>
-		  <div class="column" style="background-color:#047a8c;">
+		  <div class="column left" style="background-color:#078EA3;">
+				Input audio files
+				<div class="input">
+					<form action="/action_page.php">
+  					<input type="file" name="img" multiple>
+					</form>
+				</div>
+			</div>
+		  <div class="column right" style="background-color:#047a8c;">
 				<button class="button">Run</button>
 			</div>
+		</div>
+
+		<div>
+			<audio controls="controls">
+				Your browser does not support the audio element.
+			</audio>
+
 		</div>
 
 		<div class="footer">
