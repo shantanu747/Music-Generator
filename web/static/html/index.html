@@ -14,23 +14,35 @@
 	</head>
 
 	<body>
-		<div id="outter-wrapper">
-			<header>
-				<h1>AITunes</h1>
-			</header>
 
-			<nav>
-				<!-- Placeholder, might not be needed -->
-			</nav>
-
-			<main>
-				<div class="content-area">
-				</div>
-			</main>
-
-			<footer>
-				&copy; 2019 Codename: Kids Next Door
-			</footer>
+		<div class="header">
+		  <h2>AITunes</h2>
 		</div>
+
+		<div class="row">
+		  <div class="column left" style="background-color:#078EA3;">
+				Input audio files
+				<div class="input">
+					<form action="/action_page.php">
+  					<input type="file" name="img" multiple>
+					</form>
+				</div>
+			</div>
+		  <div class="column right" style="background-color:#047a8c;">
+				<button class="button">Run</button>
+			</div>
+		</div>
+
+		<div>
+			<audio controls="controls">
+				Your browser does not support the audio element.
+			</audio>
+
+		</div>
+
+		<div class="footer">
+			&copy; 2019 Codename: Kids Next Door
+		</div>
+
 	</body>
 </html>
