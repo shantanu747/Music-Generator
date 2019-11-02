@@ -1,5 +1,12 @@
 Music Generator
 
+CHORD RECOGNITION:
+
+You are going to need to run ACR independently using Python and not flask, to be able to test out how it works. As of Nov 1st, it is not been added to the flask workflow.
+
+I am also still working on the actual display of the note frequencies, as the spacing is off
+
+FOR SERVER:
 To run what we currently have, if you have pycharm, hit run, and go to:
 http://127.0.0.1:5000/index 
 
