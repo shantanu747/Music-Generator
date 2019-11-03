@@ -45,6 +45,11 @@ html, body {
   clear: both;
 }
 
+.files {
+  height: 50%;
+  color: black;
+}
+
 .button {
   background-color: #00A0EE;
   border: none;
