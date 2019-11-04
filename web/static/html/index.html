@@ -187,6 +187,10 @@ function saveSequence() {
 					$("#input-display").append(outhtml);
 				}
 			}
+
+			$("#clearBTN").click(function(){
+				$("#input-display").html("Your files:\n");
+			});
 			document.querySelector("#file-input").onchange = uploadFile;
 		</script>
 		<div class="footer">
