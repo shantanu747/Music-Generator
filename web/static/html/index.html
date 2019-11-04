@@ -67,12 +67,6 @@ function saveSequence() {
     }, 0);
   }
 }
-
-function uploadFile(){
-	var fileInput = document.querySelector('#file-input');
-	var files = fileInput.files;
-}
-
 function loadFile() {
   // updateUI('file-loading');
 
@@ -177,9 +171,22 @@ async function showInput(ns) {
 
 		</div>
 
+		<script>
+			var uploadFile = function()
+			{
+				var fileInput = document.querySelector("#file-input");
+				var files = fileInput.files;
+
+				for(var s = 0; s < files.length; s++)
+				{
+					var outhtml = "<p>" + files[s].name + "</p>";
+					$("#input-display").append(outhtml);
+				}
+			}
+			document.querySelector("#file-input").onchange = uploadFile;
+		</script>
 		<div class="footer">
 			&copy; 2019 Codename: Kids Next Door
 		</div>
-
 	</body>
 </html>
