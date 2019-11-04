@@ -7,7 +7,7 @@ $("#addBTN").click(function(event)
 
    for(var i = 0; i < fileList.length; i++)
    {
-      if(checkExtension(fileList[i]) && checkDuplicate(fileList[i]))
+      if(checkExtension(fileList[i]) && checkDuplicate(file))
       {
          // assert not duplicate and right file type before saving user uploaded file to the folder
          sendFile(file);

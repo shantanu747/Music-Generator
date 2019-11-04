@@ -21,7 +21,7 @@
           .then((samples) => player.start(samples[0], 80));
 }
     </script>
-			<script href="pubic.js"></script>
+			<script href="public.js"></script>
 		  <link href="public.css" rel="stylesheet" type="text/css">
 		<meta charset="utf-8">
 		<title>AITunes - AI Music Generator</title>
@@ -67,19 +67,6 @@ function saveSequence() {
     }, 0);
   }
 }
-
-var uploadFile = function()
-{
-
-	var fileInput = document.querySelector('#file-input');
-   var fileList = fileInput.files;
-   alert("Length of the file is " + fileList.length);
-
-
-	//$("input-display").append("<p>")
-}
-
-document.querySelector("#file-uploader").onchange=uploadFile;
 </script>
 		<div class="header">
 		  <h2>AITunes</h2>
@@ -97,7 +84,8 @@ document.querySelector("#file-uploader").onchange=uploadFile;
 					Your files:
 				</div>
 				<button class="button" id="runBTN" onclick="generate()">Run</button>
-				<button class="button" id="addBTN">Add</button>
+				<button class="button" id="addBTN" onclick="loadFile()">Add</button>
+
 				<button class="button" id="removeBTN">Remove</button>
 				<button class="button" id="clearBTN">Clear</button>
 			</div>
