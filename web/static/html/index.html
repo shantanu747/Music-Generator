@@ -67,6 +67,19 @@ function saveSequence() {
     }, 0);
   }
 }
+
+function uploadFile()
+{
+
+	var fileInput = document.querySelector('#file-input');
+   var fileList = fileInput.files;
+   alert("Length of the file is " + fileList.length);
+
+
+		//$("input-display").append("<p>")
+}
+
+document.querySelector("#file-uploader").onchange=uploadFile;
 </script>
 		<div class="header">
 		  <h2>AITunes</h2>
