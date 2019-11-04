@@ -51,7 +51,7 @@ player.start(trio);
 
 function saveSequence() {
 	if (!trio) {
-	alert('You must generate a trio before you can download it!');
+	alert('You must generate a song before you can download it!');
 	} else {
   const midi = mm.sequenceProtoToMidi(trio);
   const file = new Blob([midi], {type: 'audio/midi'});
