@@ -1,7 +1,17 @@
-$("#addBTN").change(function(event)
+$("#addBTN").click(function(event)
 {
    var fileInput = document.getElementById('file-input');
    var fileList = []; //this is where all user inputted files will be saved to first
+
+   for(var i = 0; i < fileList.length; i++)
+   {
+      if(checkExtension(fileList[i]) && checkDuplicate(file))
+      {
+         // assert not duplicate and right file type before saving user uploaded file to the folder
+         sendFile(file);
+         updateInputFileDiv();
+      }
+   }
 
    function sendFile(file)
    {
@@ -9,7 +19,7 @@ $("#addBTN").change(function(event)
       var request = new XMLHttpRequest();
 
       formData.set('file', file);
-      request.open("POST", file_directory_here);
+      request.open("POST", "../../User\ Uploads");
       request.send(formData);
    }
 });
@@ -18,6 +28,9 @@ function checkDuplicate(file)
 {
    // checks user input folder, returns true if file being added DNE in the folder
    // returns false is file is already in folder --> won't get uploaded twice
+
+   //stub code, will be implemented later
+   return true;
 
 }
 
@@ -35,7 +48,7 @@ function checkExtension(file)
       {
          for(var i = 0; i < validFileExtensions.length; i++)
          {
-            if(fileName.substr(fileName.length - validFileExtensions[i].length, validFileExtensions[i].length).toLowerCase() == validFileExtensions[i].toLowerCase())
+            if(fileName.substr(fileName.length - validFileExtensions[i].length, validFileExtensions[i].length).toLowerCase() == validFileExtensions[i].toLowerCase()) //this line is straight from StackOverflow, needs testing
             {
                isValid = true;
                break;
@@ -52,7 +65,14 @@ function checkExtension(file)
    }
 }
 
+function updateInputFileDiv()
+{
+   // reads files in User Uploads, for each file in that folder it creates
+   // a new p tag with the file name in it and add it to the user inputs column
+}
+
 $("#downloadBTN").click(function(event)
 {
-
+   // Targets user's downloads folder and downloads file(s) to that dir
+   // NEEDS TO BE IMPLEMENTED
 });
