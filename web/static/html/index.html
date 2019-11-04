@@ -3,18 +3,71 @@
 
 <html lang="en">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> <!-- needed to make jQuery work -->
-	<script href="{{ url_for('static', filename='js/public.js') }}"></script>
-	<link href="{{ url_for('static', filename='css/public.css') }}" rel="stylesheet" type="text/css">
 
 	<head>
 
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> <!-- needed to make jQuery work -->
+			<script src="https://cdn.jsdelivr.net/npm/@magenta/music@^1.0.0"></script>
+			  <script src='https://cdn.jsdelivr.net/npm/file-saver'></script>
+			<script>
+      // Instantiate model by loading desired config.
+      const model = new mm.MusicVAE(
+        'https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/trio_4bar');
+      const player = new mm.Player();
+
+      function play() {
+        player.resumeContext(); // enable audio
+        model.sample(1)
+          .then((samples) => player.start(samples[0], 80));
+}
+    </script>
+			<script href="{{ url_for('static', filename='js/public.js') }}"></script>
+		  <link href="public.css" rel="stylesheet" type="text/css">
 		<meta charset="utf-8">
 		<title>AITunes - AI Music Generator</title>
 	</head>
 
 	<body>
+<script>
+// Create a global trio for downloading.
+let trio;
 
+function generate() {
+mm.Player.tone.context.resume();  // enable audio
+model.sample(1).then((samples) => {
+trio = samples[0];  // store trio for download
+player.start(trio);
+});
+}
+
+function download() {
+if (!trio) {
+alert('You must generate a trio before you can download it!');
+} else {
+saveAs(new File([mm.sequenceProtoToMidi(trio)], 'trio.mid'));
+}
+}
+
+function saveSequence() {
+  const midi = mm.sequenceProtoToMidi(trio);
+  const file = new Blob([midi], {type: 'audio/midi'});
+
+  if (window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveOrOpenBlob(file, 'interp.mid');
+  } else { // Others
+    const a = document.createElement('a');
+    const url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = 'interp.mid';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
+  }
+}
+</script>
 		<div class="header">
 		  <h2>AITunes</h2>
 		</div>
@@ -30,7 +83,7 @@
 				<div id="input-display" class="files" style="background-color: white;">
 					Your files:
 				</div>
-				<button class="button" id="runBTN">Run</button>
+				<button class="button" id="runBTN" onclick="generate()">Run</button>
 				<button class="button" id="addBTN">Add</button>
 				<button class="button" id="removeBTN">Remove</button>
 				<button class="button" id="clearBTN">Clear</button>
@@ -43,7 +96,7 @@
 			<audio controls="controls">
 				Your browser does not support the audio element.
 			</audio>
-			<a href="" download id="downloadBTN"> Download </a>
+			<a href="" download id="downloadBTN" onclick="saveSequence()"> Download </a>
 
 		</div>
 
