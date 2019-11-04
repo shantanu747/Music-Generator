@@ -1,7 +1,9 @@
+
 $("#addBTN").click(function(event)
 {
    var fileInput = document.getElementById('file-input');
-   var fileList = []; //this is where all user inputted files will be saved to first
+   var fileList = fileInput.files;
+   alert(fileList[0].value);
 
    for(var i = 0; i < fileList.length; i++)
    {
@@ -13,6 +15,7 @@ $("#addBTN").click(function(event)
       }
    }
 
+   /*
    function sendFile(file)
    {
       var formData = new FormData();
@@ -22,6 +25,7 @@ $("#addBTN").click(function(event)
       request.open("POST", "../../User\ Uploads");
       request.send(formData);
    }
+   */
 });
 
 function checkDuplicate(file)
