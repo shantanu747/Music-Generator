@@ -16,6 +16,27 @@ $("#addBTN").click(function(event)
    function sendFile(file)
    {
       var formData = new FormData();
+      fd = new FormData();
+      clipName = Date.now().toString();
+      fd.append('file', file, clipName + '.wav');
+
+        console.log('POSTing data...');
+
+        let xhr = new XMLHttpRequest();
+        xhr.onload = function (e) {
+            if(this.readyState === 4){
+                console.log('success');
+                let video = document.getElementById('canvas_video');
+                  let url = window.URL || window.webkitURL;
+                  video.src = url.createObjectURL(xhr.response);
+            }
+
+        };
+
+        '../upload'
+        xhr.open('POST', "../example", true);
+        xhr.send(fd);
+        xhr.responseType = 'blob';
       var request = new XMLHttpRequest();
 
       formData.set('file', file);
