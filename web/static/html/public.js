@@ -7,7 +7,7 @@ $("#addBTN").click(function(event)
 
    for(var i = 0; i < fileList.length; i++)
    {
-      if(checkExtension(fileList[i]) && checkDuplicate(fileList[i]))
+      if(checkExtension(fileList[i]) && checkDuplicate(file))
       {
          // assert not duplicate and right file type before saving user uploaded file to the folder
          sendFile(file);
@@ -19,27 +19,6 @@ $("#addBTN").click(function(event)
    function sendFile(file)
    {
       var formData = new FormData();
-      fd = new FormData();
-      clipName = Date.now().toString();
-      fd.append('file', file, clipName + '.wav');
-
-        console.log('POSTing data...');
-
-        let xhr = new XMLHttpRequest();
-        xhr.onload = function (e) {
-            if(this.readyState === 4){
-                console.log('success');
-                let video = document.getElementById('canvas_video');
-                  let url = window.URL || window.webkitURL;
-                  video.src = url.createObjectURL(xhr.response);
-            }
-
-        };
-
-        '../upload'
-        xhr.open('POST', "../example", true);
-        xhr.send(fd);
-        xhr.responseType = 'blob';
       var request = new XMLHttpRequest();
 
       formData.set('file', file);
