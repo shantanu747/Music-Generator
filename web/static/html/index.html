@@ -18,7 +18,8 @@
         player.resumeContext(); // enable audio
         model.sample(1)
           .then((samples) => player.start(samples[0], 80));
-}			</script>
+			}
+</script>
 			<script href="public.js"></script>
 		  <link href="public.css" rel="stylesheet" type="text/css">
 		<meta charset="utf-8">
@@ -30,12 +31,23 @@
 // Create a music trio to download
 let trio;
 function generate() {
-alert('Your song will be ready in about 5-10 seconds...');
-mm.Player.tone.context.resume();  // enable audio
-model.sample(1).then((samples) => {
-trio = samples[0];  // store trio for download
-player.start(trio);
-});
+	var img = document.createElement("IMG");
+  img.src = "loading.gif";
+	img.style.height = "100%";
+	img.style.width = "100%";
+	img.style.display: "block";
+	img.style.marginLeft: "auto";
+	img.style.marginRight: "auto";
+  document.getElementById("rightcol").appendChild(img);
+
+	// alert('Your song will be ready in about 5-10 seconds...');
+	mm.Player.tone.context.resume();  // enable audio
+	model.sample(1).then((samples) => {
+	trio = samples[0];  // store trio for download
+	player.start(trio);
+
+	// document.getElementById("rightcol").removeChild(img);
+	});
 }
 // Download the song
 function saveSequence() {
@@ -79,13 +91,13 @@ function saveSequence() {
 					Your files:
 				</div>
 				<button class="button" id="runBTN" onclick="generate()">Run</button>
-				<button class="button" id="addBTN" onclick="loadFile()">Add</button>
+				<!-- <button class="button" id="addBTN" onclick="loadFile()">Add</button> -->
 
-				<button class="button" id="removeBTN">Remove</button>
+				<!-- <button class="button" id="removeBTN">Remove</button> -->
 				<button class="button" id="clearBTN">Clear</button>
 					<button class="button" id="downloadBTN" onclick="saveSequence()">Download</button>
 			</div>
-		  <div class="column right" style="background-color:#047a8c;">
+		  <div class="column right" style="background-color:#047a8c;" id = "rightcol">
 			</div>
 		</div>
 
@@ -96,7 +108,7 @@ function saveSequence() {
 		</div>
 
 		<script>
-		// Get file names from upload and put in 
+		// Get file names from upload and put in
 			var uploadFile = function()
 			{
 				var fileInput = document.querySelector("#file-input");
