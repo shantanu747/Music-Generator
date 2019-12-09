@@ -5,34 +5,131 @@
 
 <html lang="en">
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> <!-- needed to make jQuery work -->
-	<script href="{{ url_for('static', filename='js/public.js') }}"></script>
-	<link href="{{ url_for('static', filename='css/public.css') }}" rel="stylesheet" type="text/css">
 
 	<head>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> <!-- needed to make jQuery work -->
+			<script src="https://cdn.jsdelivr.net/npm/@magenta/music@^1.0.0"></script>
+			<script src='https://cdn.jsdelivr.net/npm/file-saver'></script>
+			<script>
+      // Instantiate music generation model
+      const model = new mm.MusicVAE(
+        'https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/trio_4bar');
+      const player = new mm.Player();
 
+      function play() {
+        player.resumeContext(); // enable audio
+        model.sample(1)
+          .then((samples) => player.start(samples[0], 80));
+			}
+</script>
+			<script href="public.js"></script>
+		  <link href="public.css" rel="stylesheet" type="text/css">
 		<meta charset="utf-8">
 		<title>AITunes - AI Music Generator</title>
 	</head>
 
 	<body>
-		<div id="outter-wrapper">
-			<header>
-				<h1>AITunes</h1>
-			</header>
+<script>
+// Create a music trio to download
+let trio;
+function generate() {
+	var img = document.createElement("IMG");
+  img.src = "loading.gif";
+	img.style.height = "100%";
+	img.style.width = "100%";
+	// img.style.display: "block";
+	// img.style.marginLeft: "auto";
+	// img.style.marginRight: "auto";
+  document.getElementById("rightcol").appendChild(img);
 
-			<nav>
-				<!-- Placeholder, might not be needed -->
-			</nav>
+	// alert('Your song will be ready in about 5-10 seconds...');
+	mm.Player.tone.context.resume();  // enable audio
+	model.sample(1).then((samples) => {
+	trio = samples[0];  // store trio for download
+	player.start(trio);
 
-			<main>
-				<div class="content-area">
+	document.getElementById("rightcol").removeChild(img);
+	});
+}
+// Download the song
+function saveSequence() {
+	if (!trio) {
+	alert('You must generate a song before you can download it!');
+	} else {
+  const midi = mm.sequenceProtoToMidi(trio);
+  const file = new Blob([midi], {type: 'audio/midi'});
+
+  if (window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveOrOpenBlob(file, 'generated_song.mid');
+  } else { // Others
+    const a = document.createElement('a');
+    const url = URL.createObjectURL(file);
+    a.href = url;
+    a.download = 'generated_song.mid';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }, 0);
+  }
+}}
+
+</script>
+
+		<div class="header">
+		  <h2>AITunes</h2>
+		</div>
+
+		<div class="row">
+		  <div class="column left" style="background-color:#078EA3;">
+				Input audio files
+				<div class="input">
+					<form id="file-uploader" action="/action_page.php">
+  					<input id="file-input" type="file" multiple="multiple" name="img">
+					</form>
 				</div>
-			</main>
+				<div id="input-display" class="files" style="background-color: white;">
+					Your files:
+				</div>
+				<button class="button" id="runBTN" onclick="generate()">Run</button>
+				<!-- <button class="button" id="addBTN" onclick="loadFile()">Add</button> -->
 
-			<footer>
-				&copy; 2019 Codename: Kids Next Door
-			</footer>
+				<!-- <button class="button" id="removeBTN">Remove</button> -->
+				<button class="button" id="clearBTN">Clear</button>
+					<button class="button" id="downloadBTN" onclick="saveSequence()">Download</button>
+			</div>
+		  <div class="column right" style="background-color:#047a8c;" id = "rightcol">
+			</div>
+		</div>
+
+		<div>
+			<audio controls="controls">
+				Your browser does not support the audio element.
+			</audio>
+		</div>
+
+		<script>
+		// Get file names from upload and put in
+			var uploadFile = function()
+			{
+				var fileInput = document.querySelector("#file-input");
+				var files = fileInput.files;
+
+				for(var s = 0; s < files.length; s++)
+				{
+					var outhtml = "<p>" + files[s].name + "</p>";
+					$("#input-display").append(outhtml);
+				}
+			}
+
+			$("#clearBTN").click(function(){
+				$("#input-display").html("Your files:\n");
+			});
+			document.querySelector("#file-input").onchange = uploadFile;
+		</script>
+		<div class="footer">
+			&copy; 2019 Codename: Kids Next Door
 		</div>
 	</body>
 </html>

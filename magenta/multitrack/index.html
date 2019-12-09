@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title>Magenta - multitrack interpolation</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <link id="favicon" rel="icon" href="https://magenta.tensorflow.org/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <!--<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,700" rel="stylesheet">-->
+    <script src="https://cdn.jsdelivr.net/npm/@magenta/music@^1.2.3"></script>
+    <script src="script.js"></script>
+  </head>
+
+  <body>
+    <div class="content">
+      <div class="preamble">
+        <h1>Multitrack Interpolation</h1>
+
+        <p class="about">This demo uses <a href="https://magenta.tensorflow.org/multitrack">MusicVAE</a>, a machine learning model that
+          is able to interpolate between different musical styles. Try it below!
+        </p>
+
+        <div id="status" class="loading">Loading model (25 MB)...</div>
+      </div>
+
+      <div class="bottom" id="controls" disabled>
+        <div style="text-align: center;">
+          <button id="play" class="inverted">Play</button>
+          <button id="playInterp">Play Full Interpolation</button>
+          <button id="download">Save as MIDI</button>
+        </div>
+        <div class="horizontal" id="slideControls">
+          <div id="style1">
+            <h2>Style 1</h2>
+            <button id="sample1">Random</button>
+            <label id="importLabel1">
+              <input type="file" id="import1" accept="audio/midi">
+              Load MIDI
+            </label>
+          </div>
+
+          <input id="alpha" type="range" min="0" max="15" value="0">
+
+          <div id="style2">
+            <h2>Style 2</h2>
+            <button id="sample2">Random</button>
+            <label id="importLabel2">
+              <input type="file" id="import2" accept="audio/midi">
+              Load MIDI
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="fineprint">
+      Made with <a href="https://magenta.tensorflow.org">Magenta.js</a>.
+      Designed by <a href="https://meowni.ca/">Monica Dinculescu</a>.
+      Uses samples from <a href='https://www.polyphone-soundfonts.com/en/files/27-instrument-sets/256-sgm-v2-01'>SGM</a>
+      with modifications by <a href="https://sites.google.com/site/soundfonts4u/">John Nebauer</a>.
+      May work poorly on mobile.
+    </p>
+  </body>
+</html>

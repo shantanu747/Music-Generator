@@ -2,24 +2,47 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 /* Style the header */
 .header {
-  background-color: #f1f1f1;
+  background-color: #150C48;
   padding: 30px;
   text-align: center;
   font-size: 35px;
+  color: #E0C600;
 }
 
-/* Create three equal columns that floats next to each other */
+.row {
+  height: 50%;
+}
+
+/* Create two unequal columns that floats next to each other */
 .column {
   float: left;
-  width: 33.33%;
-  padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
+  padding: 0px;
+  height: 100%; /* Should be removed. Only for demonstration */
+  color: white;
+}
+
+.left {
+  width: 75%;
+}
+
+.right {
+  width: 25%;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 /* Clear floats after the columns */
@@ -27,6 +50,24 @@ body {
   content: "";
   display: table;
   clear: both;
+}
+
+.files {
+  height: 50%;
+  color: black;
+}
+
+.button {
+  background-color: #00A0EE;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 
 /* Style the footer */
