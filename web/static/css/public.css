@@ -26,7 +26,7 @@ html, body {
 .column {
   float: left;
   padding: 0px;
-  height: 100%; /* Should be removed. Only for demonstration */
+  height: 100%;
   color: white;
 }
 
@@ -36,13 +36,6 @@ html, body {
 
 .right {
   width: 25%;
-}
-
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
 }
 
 /* Clear floats after the columns */
