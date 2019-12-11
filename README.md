@@ -1,5 +1,22 @@
 Music Generator
 
+For SD&D we have the client side built. 
+
+To run the client, you need to navigate to the Client folder, and make sure you have npm in your computer.
+
+In the Client directory on the command-line do:
+
+npm install
+npm start
+
+if npm start doesnt work try:
+npm start react-scripts start
+
+
+
+
+
+This is for the backend, which we didn't get to but maybe plan to create and finish later.
 CHORD RECOGNITION:
 
 You are going to need to run ACR independently using Python and not flask, to be able to test out how it works. As of Nov 1st, it is not been added to the flask workflow.
