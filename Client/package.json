@@ -1,0 +1,53 @@
+{
+  "name": "song-generation",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.7.2",
+    "@tonejs/midi": "^2.0.15",
+    "ajax": "0.0.4",
+    "material-ui-popup-state": "^1.4.1",
+    "midi-file": "^1.1.2",
+    "node": "^13.3.0",
+    "react-async": "^10.0.0",
+    "superagent": "^5.1.2",
+    "underscore": "^1.9.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@magenta/music": "^1.12.0",
+    "file-saver": "^2.0.2",
+    "magenta": "0.0.0",
+    "midi-json-parser": "^6.4.12",
+    "node-fetch": "latest",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0",
+    "static-eval": "^2.0.3",
+    "styled-components": "^4.4.1",
+    "tone": "^13.8.25"
+  }
+}

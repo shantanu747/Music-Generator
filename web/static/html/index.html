@@ -1,142 +1,86 @@
 <!-- Homepage of our project -->
 <!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <html lang="en">
-
-
 	<head>
-
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> <!-- needed to make jQuery work -->
 			<script src="https://cdn.jsdelivr.net/npm/@magenta/music@^1.0.0"></script>
-			  <script src='https://cdn.jsdelivr.net/npm/file-saver'></script>
+			<script src='https://cdn.jsdelivr.net/npm/file-saver'></script>
 			<script>
-      // Instantiate model by loading desired config.
-      const model = new mm.MusicVAE(
-        'https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/trio_4bar');
-      const player = new mm.Player();
+	      // Instantiate music generation model
+	      const model = new mm.MusicVAE(
+	        'https://storage.googleapis.com/magentadata/js/checkpoints/music_vae/trio_4bar');
+	      const player = new mm.Player();
 
-      function play() {
-        player.resumeContext(); // enable audio
-        model.sample(1)
-          .then((samples) => player.start(samples[0], 80));
-}
-    </script>
+				// plays the generated song once generated
+	      function play()
+				{
+	        player.resumeContext(); // enable audio
+	        model.sample(1)
+	          .then((samples) => player.start(samples[0], 80));
+				}
+			</script>
 			<script href="public.js"></script>
 		  <link href="public.css" rel="stylesheet" type="text/css">
-		<meta charset="utf-8">
-		<title>AITunes - AI Music Generator</title>
+			<meta charset="utf-8">
+			<title>AITunes - AI Music Generator</title>
 	</head>
 
 	<body>
-<script>
-// Create a global trio for downloading.
-let trio;
+		<script>
+			// Create a music trio to download
+			let trio;
+			// functionality for the "run" button
+			function generate()
+			{
+				// loading animation
+				var img = document.createElement("IMG");
+			  img.src = "loading.gif";
+				img.style.height = "100%";
+				img.style.width = "100%";
+				// img.style.display: "block";
+				// img.style.marginLeft: "auto";
+				// img.style.marginRight: "auto";
+			  document.getElementById("rightcol").appendChild(img);
 
-function generate() {
-mm.Player.tone.context.resume();  // enable audio
-model.sample(1).then((samples) => {
-trio = samples[0];  // store trio for download
-player.start(trio);
-});
-}
+				mm.Player.tone.context.resume();  // enable audio
+				model.sample(1).then((samples) => {
+				trio = samples[0];  // store trio for download
+				player.start(trio);
 
-function download() {
-if (!trio) {
-alert('You must generate a trio before you can download it!');
-} else {
-saveAs(new File([mm.sequenceProtoToMidi(trio)], 'trio.mid'));
-}
-}
+				document.getElementById("rightcol").removeChild(img);
+				});
+			}
 
-function saveSequence() {
-  const midi = mm.sequenceProtoToMidi(trio);
-  const file = new Blob([midi], {type: 'audio/midi'});
+			// Download the song
+			function saveSequence()
+			{
+				if (!trio) alert('You must generate a song before you can download it!');
+				else
+				{
+				  const midi = mm.sequenceProtoToMidi(trio);
+				  const file = new Blob([midi], {type: 'audio/midi'});
 
-  if (window.navigator.msSaveOrOpenBlob) {
-    window.navigator.msSaveOrOpenBlob(file, 'interp.mid');
-  } else { // Others
-    const a = document.createElement('a');
-    const url = URL.createObjectURL(file);
-    a.href = url;
-    a.download = 'interp.mid';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => {
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
-    }, 0);
-  }
-}
-function loadFile() {
-  // updateUI('file-loading');
+				  if (window.navigator.msSaveOrOpenBlob) window.navigator.msSaveOrOpenBlob(file, 'generated_song.mid');
+				  else
+					{ // Others
+				    const a = document.createElement('a');
+				    const url = URL.createObjectURL(file);
+				    a.href = url;
+				    a.download = 'generated_song.mid';
+				    document.body.appendChild(a);
+				    a.click();
+				    setTimeout(() => {
+				      document.body.removeChild(a);
+				      window.URL.revokeObjectURL(url);
+				    }, 0);
+				  }
+				}
+			}
+		</script>
 
-  // model = new mm.MusicVAE({epochs: 100});
-  // model.initialize();
-	var fileInput = document.querySelector('#file-input');
-  const promises = [];
-  for (let i = 0; i < fileInput.files.length; i++) {
-    promises.push(mm.blobToNoteSequence(fileInput.files[i]));
-  }
-  Promise.all(promises).then(showInput);
-}
-async function showInput(ns) {
-  const instruments = [];
-  let shouldSplit = false;
-  ns.forEach((m) => {
-    const i = getInstruments(m);
-    instruments.push(i)
-    if (i.length > 1) shouldSplit = true;
-  });
-
-
-  const mels = [];
-  const quantizedMels = [];
-	let isMelodyMode = true;
-
-  if (isMelodyMode && shouldSplit) {
-    instruments.forEach((i) => mels.push(getMelody(i)));
-    mels.forEach((m) => quantizedMels.push(mm.sequences.quantizeNoteSequence(m, 4)));
-
-    // trimSilence(mels);
-    melody = mm.sequences.concatenate(mels);
-    playerMelody.loadSamples(melody);
-    // vizMelody = new mm.PianoRollSVGVisualizer(
-    //   melody,
-    //   document.getElementById('vizMelody'),
-    //   {noteRGB:'35,70,90', activeNoteRGB:'157, 229, 184', noteHeight:3});
-    // updateUI('has-melody');
-  } else {
-    ns.forEach((m) => quantizedMels.push(mm.sequences.quantizeNoteSequence(m, 4)));
-  }
-
-  // trimSilence(ns);
-  input = mm.sequences.concatenate(ns);
-  playerInput.loadSamples(input);
-  // vizInput = new mm.PianoRollSVGVisualizer(
-  //   input,
-  //   document.getElementById('vizInput'),
-  //   {noteRGB:'35,70,90', activeNoteRGB:'157, 229, 184', noteHeight:3});
-
-  // This is the input that we're going to train on.
-  const chunks = getChunks(quantizedMels);
-  const z = await mvae.encode(chunks);  // shape of z is [chunks, 256]
-
-  updateUI('file-loaded');
-
-  training.z = z;
-  await sample();
-	function getChunks(quantizedMels) {
-	    // Encode the input into MusicVAE, get back a z.
-	    // Split this sequence into 32 bar chunks.
-	    let chunks = [];
-	    quantizedMels.forEach((m) => {
-	      const melChunks = mm.sequences.split(mm.sequences.clone(m), 16 * MODEL_BARS);
-	      chunks = chunks.concat(melChunks);
-	    });
-	    return chunks;
-	  }
-	}
-</script>
 		<div class="header">
 		  <h2>AITunes</h2>
 		</div>
@@ -153,13 +97,13 @@ async function showInput(ns) {
 					Your files:
 				</div>
 				<button class="button" id="runBTN" onclick="generate()">Run</button>
-				<button class="button" id="addBTN" onclick="loadFile()">Add</button>
+				<!-- <button class="button" id="addBTN" onclick="loadFile()">Add</button> -->
 
-				<button class="button" id="removeBTN">Remove</button>
+				<!-- <button class="button" id="removeBTN">Remove</button> -->
 				<button class="button" id="clearBTN">Clear</button>
 					<button class="button" id="downloadBTN" onclick="saveSequence()">Download</button>
 			</div>
-		  <div class="column right" style="background-color:#047a8c;">
+		  <div class="column right" style="background-color:#047a8c;" id = "rightcol">
 			</div>
 		</div>
 
@@ -167,11 +111,10 @@ async function showInput(ns) {
 			<audio controls="controls">
 				Your browser does not support the audio element.
 			</audio>
-			<!--<a href="" download id="downloadBTN" onclick="saveSequence()"> Download </a>-->
-
 		</div>
 
 		<script>
+		// Get file names from upload and put in
 			var uploadFile = function()
 			{
 				var fileInput = document.querySelector("#file-input");
@@ -183,10 +126,17 @@ async function showInput(ns) {
 					$("#input-display").append(outhtml);
 				}
 			}
+
+			$("#clearBTN").click(function(){
+				$("#input-display").html("Your files:\n");
+			});
 			document.querySelector("#file-input").onchange = uploadFile;
+
 		</script>
+
 		<div class="footer">
 			&copy; 2019 Codename: Kids Next Door
 		</div>
+		
 	</body>
 </html>

@@ -1,7 +1,11 @@
-To run our program, git clone this repo and go to index.html. Our software will run locally on your computer without the need for a server.
+To run our program, git clone this repo and go to the Client/ directory. Our software will run locally on your computer without the need for a server.
 
-git clone https://github.com/shantanu747/Music-Generator
 
-go into web -> static -> index.html
+Then to run the client make sure you have npm installed in your computer.
 
-Just click index.html for the demo.
+In the Client directory on the command-line do:
+
+npm install
+npm start
+
+That way npm runs a local server, and will automatically start the program.
